@@ -8,17 +8,22 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'Event Management System';
+  IsLoggin: boolean = false;
   roleName: string | null = '';
 
-  constructor(public authService: AuthService, private router: Router) {}
-
-  ngOnInit() {
-    // FIX: Added parentheses to call the function correctly
+  constructor(public authService: AuthService, private router: Router) {
+    this.IsLoggin = this.authService.getLoginStatus();
     this.roleName = this.authService.getRole();
+    
+    if (!this.IsLoggin) {
+      this.router.navigate(['/login']);
+    }
   }
+
+  ngOnInit() {}
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    window.location.reload(); // Required by the document
   }
 }

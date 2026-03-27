@@ -6,10 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "events")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("eventID") // <--- GUARANTEES JSON MATCHES THE TEST CASE
+    @JsonProperty("eventID")
     private Long eventID;
     
     private String title;

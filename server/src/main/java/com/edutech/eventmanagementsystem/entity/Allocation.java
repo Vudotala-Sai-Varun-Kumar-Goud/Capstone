@@ -11,7 +11,7 @@ public class Allocation {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    @JsonIgnore // MUST HAVE THIS TO PREVENT THE SERVER FROM CRASHING
+    @JsonIgnore 
     private Event event;
 
     @ManyToOne

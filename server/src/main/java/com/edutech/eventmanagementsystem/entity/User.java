@@ -3,7 +3,7 @@ package com.edutech.eventmanagementsystem.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users") // <--- THIS PREVENTS THE H2 DATABASE CRASH
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
