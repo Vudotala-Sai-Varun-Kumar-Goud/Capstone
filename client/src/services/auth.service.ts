@@ -5,5 +5,30 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  //todo: complete missing code..
+  constructor() { }
+
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  SetRole(role: string): void {
+    localStorage.setItem('role', role);
+  }
+
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
+
+  getLoginStatus(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+  }
 }

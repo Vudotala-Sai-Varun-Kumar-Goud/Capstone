@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HttpService } from '../../services/http.service';
-import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-resource-allocate',
-  templateUrl: './resource-allocate.component.html',
-  styleUrls: ['./resource-allocate.component.scss']
+  templateUrl: './resource-allocate.component.html'
 })
-export class ResourceAllocateComponent 
-//todo: complete missing code..
+export class ResourceAllocateComponent implements OnInit {
+  itemForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.itemForm = this.fb.group({
+      eventId: ['', Validators.required],
+      resourceId: ['', Validators.required],
+      quantity: ['', Validators.required]
+    });
+  }
+}

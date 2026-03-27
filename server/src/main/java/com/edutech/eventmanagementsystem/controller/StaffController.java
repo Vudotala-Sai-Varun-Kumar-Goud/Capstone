@@ -1,24 +1,26 @@
 package com.edutech.eventmanagementsystem.controller;
 
-
+import com.edutech.eventmanagementsystem.entity.Event;
+import com.edutech.eventmanagementsystem.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.edutech.eventmanagementsystem.entity.Event;
-import com.edutech.eventmanagementsystem.service.EventService;
-
-
+@RestController
+@RequestMapping("/api/staff")
+@CrossOrigin(origins = "*")
 public class StaffController {
 
+    @Autowired
+    private EventService eventService;
 
-   
-        // get the event details by eventId and return the event with status code 200 ok
-    
+    @GetMapping("/event-details/{eventId}")
+    public ResponseEntity<Event> getEventDetails(@PathVariable("eventId") Long eventId) {
+        return ResponseEntity.ok(eventService.getEventById(eventId).orElse(null));
+    }
 
-  
-    
-        // update the event setup and return the updated event with status code 200 ok
-    
+    @PutMapping("/update-setup/{eventId}")
+    public ResponseEntity<Event> updateSetup(@PathVariable("eventId") Long eventId, @RequestBody Event event) {
+        return ResponseEntity.ok(eventService.updateEvent(eventId, event));
+    }
 }

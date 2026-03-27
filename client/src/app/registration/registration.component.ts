@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HttpService } from '../../services/http.service';
-
 
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  templateUrl: './registration.component.html'
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
+  itemForm!: FormGroup;
 
- //todo: Complete missing code..
+  constructor(private fb: FormBuilder) { }
 
-
+  ngOnInit(): void {
+    this.itemForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      role: ['', Validators.required]
+    });
+  }
 }

@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HttpService } from '../../services/http.service';
-import { AuthService } from '../../services/auth.service';
-
 
 @Component({
   selector: 'app-view-events',
-  templateUrl: './view-events.component.html',
-  styleUrls: ['./view-events.component.scss']
+  templateUrl: './view-events.component.html'
 })
-export class ViewEventsComponent 
-  
-//todo: complete missing code..
+export class ViewEventsComponent implements OnInit {
+  itemForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.itemForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      dateTime: ['', Validators.required],
+      location: ['', Validators.required],
+      status: ['', Validators.required]
+    });
+  }
+}
