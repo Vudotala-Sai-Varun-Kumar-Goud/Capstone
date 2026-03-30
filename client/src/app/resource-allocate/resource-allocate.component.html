@@ -1,1 +1,59 @@
-//todo: complete missing code..
+<div class="command-center-layout animate-slide-up">
+
+  <div class="context-panel">
+    <div class="context-icon">⚙️</div>
+    <h1>Resource Allocation</h1>
+    <p class="subtitle">Assign inventory securely to active events.</p>
+    
+    <div class="guidelines">
+      <h3>Allocation Guidelines</h3>
+      <ul>
+        <li>Ensure the target event is fully scheduled before allocating inventory.</li>
+        <li>Only resources marked as <strong>'Available'</strong> in the global database will appear in the selection dropdown.</li>
+        <li>Check required quantities against your physical inventory before confirming.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="action-panel">
+    <div class="glass-card">
+      <div class="card-title">Allocation Request Form</div>
+      
+      <div *ngIf="showMessage" class="alert alert-success">{{ responseMessage }}</div>
+      <div *ngIf="showError" class="alert alert-danger">{{ errorMessage }}</div>
+
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+        
+        <div class="form-group">
+          <label>Target Event</label>
+          <select formControlName="eventId" class="clean-select">
+            <option value="" disabled selected>Select an Event</option>
+            <option *ngFor="let ev of eventList" [value]="ev.eventID || ev.id">
+              {{ ev.title }} ({{ ev.dateTime | date:'MMM d' }})
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Resource to Assign</label>
+          <select formControlName="resourceId" class="clean-select">
+            <option value="" disabled selected>Select an Available Resource</option>
+            <ng-container *ngFor="let res of resourceList">
+              <option *ngIf="res.availability" [value]="res.resourceID || res.id">
+                {{ res.name }} [{{ res.type }}]
+              </option>
+            </ng-container>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" formControlName="quantity" placeholder="Enter amount needed" class="clean-input">
+        </div>
+        
+        <button type="submit" class="btn submit-btn" [disabled]="!itemForm.valid">Confirm Allocation</button>
+      </form>
+    </div>
+  </div>
+
+</div>

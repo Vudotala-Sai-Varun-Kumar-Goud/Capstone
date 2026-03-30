@@ -1,1 +1,46 @@
-//todo: complete missing code.
+<div class="page-wrapper animate-slide-up">
+  
+  <div class="content-card search-card">
+    <div class="section-header">
+      <h2>My Bookings</h2>
+      <p>Enter your Booking/Event ID to view the latest details and status.</p>
+    </div>
+
+    <div *ngIf="showError" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="search-bar">
+      <input type="number" (input)="formModel.eventID = $any($event.target).value" placeholder="Enter Event ID (e.g., 1)">
+      <button class="btn search-btn" (click)="searchEvent()">Search Booking</button>
+    </div>
+  </div>
+
+  <div *ngFor="let item of scores$" class="content-card booking-card animate-slide-up" style="animation-delay: 0.1s;">
+    
+    <div class="booking-header">
+      <h3>{{ item.title }}</h3>
+      <span class="status-badge" [ngClass]="item.status | lowercase">
+        <span *ngIf="item.status === 'ONGOING'" class="live-pulse"></span>
+        {{ item.status }}
+      </span>
+    </div>
+
+    <div class="booking-info">
+      <div class="info-row">
+        <strong>Description:</strong> 
+        <span>{{ item.description }}</span>
+      </div>
+      
+      <div class="info-row">
+        <strong>Location:</strong> 
+        <span>{{ item.location }}</span>
+      </div>
+      
+      <div class="info-row">
+        <strong>Date & Time:</strong> 
+        <span>{{ item.dateTime | date:'medium' }}</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

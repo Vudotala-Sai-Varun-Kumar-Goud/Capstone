@@ -1,21 +1,52 @@
 package com.edutech.eventmanagementsystem.controller;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.edutech.eventmanagementsystem.entity.Allocation;
 import com.edutech.eventmanagementsystem.entity.Event;
 import com.edutech.eventmanagementsystem.entity.Resource;
 import com.edutech.eventmanagementsystem.service.EventService;
 import com.edutech.eventmanagementsystem.service.ResourceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@RestController
+@RequestMapping("/api/planner")
+@CrossOrigin(origins = "*")
 public class EventPlannerController {
 
+    @Autowired
+    private EventService eventService;
 
+    @Autowired
+    private ResourceService resourceService;
+
+    @PostMapping("/event")
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        return ResponseEntity.ok(eventService.createEvent(event));
+    }
+
+    @GetMapping("/events")
+    public ResponseEntity<List<Event>> getEvents() {
+        return ResponseEntity.ok(eventService.getAllEvents());
+    }
+
+    @PostMapping("/resource")
+    public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
+        return ResponseEntity.ok(resourceService.addResource(resource));
+    }
+
+    @GetMapping("/resources")
+    public ResponseEntity<List<Resource>> getResources() {
+        return ResponseEntity.ok(resourceService.getAllResources());
+    }
+
+    @PostMapping("/allocate-resources")
+    public ResponseEntity<Allocation> allocateResources(
+            @RequestParam("eventId") Long eventId, 
+            @RequestParam("resourceId") Long resourceId, 
+            @RequestBody Allocation allocation) {
+        return ResponseEntity.ok(resourceService.allocateResource(eventId, resourceId, allocation.getQuantity()));
+    }
 }

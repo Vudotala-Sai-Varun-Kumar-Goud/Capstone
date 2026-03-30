@@ -1,13 +1,11 @@
 package com.edutech.eventmanagementsystem.repository;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import com.edutech.eventmanagementsystem.entity.User;
+import java.util.Optional;
 
-
-public interface UserRepository {
-    // extend jpa repository and add custom method if needed
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
 }
-

@@ -1,1 +1,84 @@
-//todo: complete missing code.
+<div class="workspace-layout animate-slide-up">
+  
+  <div class="glass-panel form-panel">
+    <div class="panel-header">
+      <div class="header-icon">✨</div>
+      <div class="header-text">
+        <h2>Draft Event</h2>
+        <p>Configure new event parameters</p>
+      </div>
+    </div>
+
+    <div *ngIf="showMessage" class="alert alert-success">{{ responseMessage }}</div>
+    <div *ngIf="showError" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Event Title</label>
+        <div class="input-wrapper">
+          <input type="text" formControlName="title" placeholder="e.g. Annual Tech Summit">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Date & Time</label>
+        <div class="input-wrapper">
+          <input type="datetime-local" formControlName="dateTime">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Location</label>
+        <div class="input-wrapper">
+          <input type="text" formControlName="location" placeholder="e.g. Main Auditorium">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="description" rows="3" placeholder="Provide event details..."></textarea>
+      </div>
+      
+      <button type="submit" class="btn submit-btn" [disabled]="!itemForm.valid">Launch Event</button>
+    </form>
+  </div>
+
+  <div class="glass-panel table-panel" style="animation-delay: 0.2s;">
+    <div class="panel-header">
+      <div class="header-icon">📡</div>
+      <div class="header-text">
+        <h2>Live Event Registry</h2>
+        <p>Real-time overview of all scheduled and active events.</p>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Schedule</th>
+            <th>Location</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ev of eventList">
+            <td class="id-cell">#{{ ev.eventID || ev.id }}</td>
+            <td class="fw-bold text-white">{{ ev.title }}</td>
+            <td class="text-muted">{{ ev.dateTime | date:'MMM d, y, h:mm a' }}</td>
+            <td><span class="location-tag">{{ ev.location }}</span></td>
+            <td>
+              <span class="status-badge" [ngClass]="ev.status | lowercase">
+                <span *ngIf="ev.status === 'ONGOING'" class="live-pulse"></span>
+                {{ ev.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
